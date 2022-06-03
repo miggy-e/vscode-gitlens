@@ -71,8 +71,8 @@ export class GraphWebview extends WebviewBase<State> {
 	constructor(container: Container) {
 		super(
 			container,
-			'gitlens.timeline',
-			'timeline.html',
+			'gitlens.graph',
+			'graph.html',
 			'images/happykeif1.png',
 			'Miggy graph',
 			Commands.ShowGraphView,

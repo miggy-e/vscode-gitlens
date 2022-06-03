@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			.hidden {
+				display: none !important;
+			}
+		</style>
+	</head>
+	<text>hello???<text>
+	<body class="preload">
+		<div class="container">
+			<section class="header">
+				<h2 data-bind="title"></h2>
+				<h2 data-bind="description"></h2>
+			</section>
+			<section id="content">
+				<div id="chart"></div>
+				<div id="chart-empty-overlay" class="hidden">
+					<h1 data-bind="empty"></h1>
+				</div>
+			</section>
+			<section id="footer"></section>
+		</div>
+		<div id="overlay" class="hidden">
+			<div class="modal">
+				<p>
+					the graph?
+				</p>
+				<div id="overlay-slot"></div>
+			</div>
+		</div>
+		#{endOfBody}
+		<style nonce="#{cspNonce}">
+			@font-face {
+				font-family: 'codicon';
+				src: url('#{root}/dist/webviews/codicon.ttf?669d352dfabff8f6eaa466c8ae820e43') format('truetype');
+			}
+		</style>
+	</body>
+
+	<!-- prettier-ignore -->
+	<%= require('html-loader?{"esModule":false}!./partials/state.free.html') %>
+	<%= require('html-loader?{"esModule":false}!./partials/state.free-preview-expired.html') %>
+	<%= require('html-loader?{"esModule":false}!./partials/state.plus-trial-expired.html') %>
+	<%= require('html-loader?{"esModule":false}!./partials/state.verify-email.html') %>
+</html>
