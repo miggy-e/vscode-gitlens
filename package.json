@@ -98,6 +98,7 @@
 		"onCommand:gitlens.showStashesView",
 		"onCommand:gitlens.showTagsView",
 		"onCommand:gitlens.showTimelineView",
+		"onCOmmand:gitlens.showGraphView",
 		"onCommand:gitlens.showWorktreesView",
 		"onCommand:gitlens.compareWith",
 		"onCommand:gitlens.compareHeadWith",
@@ -3870,6 +3871,11 @@
 				"category": "GitLens"
 			},
 			{
+				"command": "gitlens.showGraphView",
+				"title": "Show Graph View",
+				"category": "GitLens"
+			},
+			{
 				"command": "gitlens.showWorktreesView",
 				"title": "Show Worktrees View",
 				"category": "GitLens"
@@ -6135,6 +6141,10 @@
 				},
 				{
 					"command": "gitlens.showTimelineView",
+					"when": "gitlens:enabled"
+				},
+				{
+					"command": "gitlens.showGraphView",
 					"when": "gitlens:enabled"
 				},
 				{

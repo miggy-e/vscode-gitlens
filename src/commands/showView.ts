@@ -18,6 +18,7 @@ export class ShowViewCommand extends Command {
 			Commands.ShowStashesView,
 			Commands.ShowTagsView,
 			Commands.ShowTimelineView,
+			Commands.ShowGraphView,
 			Commands.ShowWorktreesView,
 			Commands.ShowHomeView,
 		]);
@@ -53,6 +54,9 @@ export class ShowViewCommand extends Command {
 				return this.container.tagsView.show();
 			case Commands.ShowTimelineView:
 				return this.container.timelineView.show();
+			case Commands.ShowGraphView:
+				console.log('found him');
+				return this.container.graphWebview.show();
 			case Commands.ShowWorktreesView:
 				return this.container.worktreesView.show();
 		}

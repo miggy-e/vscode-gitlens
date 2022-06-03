@@ -32,6 +32,7 @@ import { Logger } from './logger';
 import { SubscriptionAuthenticationProvider } from './plus/subscription/authenticationProvider';
 import { ServerConnection } from './plus/subscription/serverConnection';
 import { SubscriptionService } from './plus/subscription/subscriptionService';
+import { GraphWebview } from './plus/webviews/graph/graphWebview';
 import { TimelineWebview } from './plus/webviews/timeline/timelineWebview';
 import { TimelineWebviewView } from './plus/webviews/timeline/timelineWebviewView';
 import { StatusBarController } from './statusbar/statusBarController';
@@ -182,6 +183,7 @@ export class Container {
 
 		context.subscriptions.push((this._settingsWebview = new SettingsWebview(this)));
 		context.subscriptions.push((this._timelineWebview = new TimelineWebview(this)));
+		context.subscriptions.push((this._graphWebview = new GraphWebview(this)));
 		context.subscriptions.push((this._welcomeWebview = new WelcomeWebview(this)));
 		context.subscriptions.push((this._rebaseEditor = new RebaseEditorProvider(this)));
 
@@ -505,6 +507,11 @@ export class Container {
 	private _timelineWebview: TimelineWebview;
 	get timelineWebview() {
 		return this._timelineWebview;
+	}
+
+	private _graphWebview: GraphWebview;
+	get graphWebview() {
+		return this._graphWebview;
 	}
 
 	private _tracker: GitDocumentTracker;
