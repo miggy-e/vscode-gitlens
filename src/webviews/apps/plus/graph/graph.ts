@@ -18,6 +18,7 @@ export class GraphApp extends App<State> {
 	private _chart: TimelineChart | undefined;
 	private _graph: HTMLElement | null | undefined;
 	private _messages: HTMLElement | null | undefined;
+	private _commits: HTMLElement | null | undefined;
 	private times = 0;
 
 	constructor() {
@@ -27,6 +28,7 @@ export class GraphApp extends App<State> {
 	protected override onInitialize() {
 		this._graph = document.getElementById('graph');
 		this._messages = document.getElementById('messages');
+		this._commits = document.getElementById('commits');
 		if (this._messages != null){
 			this._messages.append('GraphApp initialized');
 			const $newmessage = document.createElement('div');
@@ -36,6 +38,9 @@ export class GraphApp extends App<State> {
 			const $newmessage2 = document.createElement('div');
 			$newmessage2.textContent = 'New message2';
 			this._messages.append($newmessage2);
+		}
+		if (this._commits != null){
+			this._commits.textContent = 'COMMITS';
 		}
 		provideVSCodeDesignSystem().register({
 			register: function (container: any, context: any) {
@@ -110,9 +115,24 @@ export class GraphApp extends App<State> {
 	}
 
 	private updateState(): void {
+		// if (this._graph != null){
+		// 	this._graph.textContent = `updated state ${this.times}`;
+		// 	this.times = this.times + 1;
+		// }
 		if (this._graph != null){
-			this._graph.textContent = `updated state ${this.times++}`;
+			this._graph.textContent = `updated state: \n${JSON.stringify(this.state, null, 2)}`;
 		}
+		if (this._commits != null && this.state.dataset?.length){
+			for (const commit of this.state.dataset){
+				console.log('zz testing', commit);
+				const $newcommit = document.createElement('div');
+				$newcommit.textContent = `${JSON.stringify(commit, null, 2)}`;
+				this._commits.append($newcommit);
+			}
+		} else if (this._commits != null){
+				this._commits.textContent = JSON.stringify(this.state.dataset, null, 2);
+		}
+
 		const $overlay = document.getElementById('overlay') as HTMLDivElement;
 		$overlay.classList.toggle('hidden', this.state.access.allowed);
 

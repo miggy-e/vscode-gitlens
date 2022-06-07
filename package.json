@@ -98,7 +98,7 @@
 		"onCommand:gitlens.showStashesView",
 		"onCommand:gitlens.showTagsView",
 		"onCommand:gitlens.showTimelineView",
-		"onCOmmand:gitlens.showGraphView",
+		"onCommand:gitlens.showGraphView",
 		"onCommand:gitlens.showWorktreesView",
 		"onCommand:gitlens.compareWith",
 		"onCommand:gitlens.compareHeadWith",

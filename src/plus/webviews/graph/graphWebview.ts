@@ -162,6 +162,7 @@ export class GraphWebview extends WebviewBase<State> {
 	}
 
 	protected override onMessageReceived(e: IpcMessage) {
+		console.log('zz message received', e);
 		switch (e.method) {
 			case OpenDataPointCommandType.method:
 				onIpc(OpenDataPointCommandType, e, params => {
@@ -209,6 +210,7 @@ export class GraphWebview extends WebviewBase<State> {
 
 	@debug({ args: false })
 	private onRepositoryChanged(e: RepositoryChangeEvent) {
+		console.log('zz repository changed', e);
 		if (!e.changed(RepositoryChange.Heads, RepositoryChange.Index, RepositoryChangeComparisonMode.Any)) {
 			return;
 		}
@@ -220,6 +222,7 @@ export class GraphWebview extends WebviewBase<State> {
 
 	@debug({ args: false })
 	private onSubscriptionChanged(e: SubscriptionChangeEvent) {
+		console.log('zz subscription changed', e);
 		if (this.updatePendingContext({ etagSubscription: e.etag })) {
 			this.updateState();
 		}
@@ -227,6 +230,7 @@ export class GraphWebview extends WebviewBase<State> {
 
 	@debug({ args: false })
 	private async getState(current: Context): Promise<State> {
+		console.log('zz get state', current);
 		const access = await this.container.git.access(PlusFeatures.Timeline);
 		const dateFormat = this.container.config.defaultDateFormat ?? 'MMMM Do, YYYY h:mma';
 		const shortDateFormat = this.container.config.defaultDateShortFormat ?? 'short';
@@ -263,11 +267,7 @@ export class GraphWebview extends WebviewBase<State> {
 
 		const [currentUser, log] = await Promise.all([
 			this.container.git.getCurrentUser(repoPath),
-			this.container.git.getLogForFile(repoPath, gitUri.fsPath, {
-				limit: 0,
-				ref: gitUri.sha,
-				since: this.getPeriodDate(period).toISOString(),
-			}),
+			this.container.git.getLog(repoPath)
 		]);
 
 		if (log == null) {
@@ -303,6 +303,7 @@ export class GraphWebview extends WebviewBase<State> {
 
 			void (await Promise.allSettled(queryRequiredCommits.map(c => c.ensureFullDetails())));
 		}
+
 
 		const name = currentUser?.name ? `${currentUser.name} (you)` : 'You';
 
@@ -350,6 +351,7 @@ export class GraphWebview extends WebviewBase<State> {
 
 	private updatePendingContext(context: Partial<Context>): boolean {
 		let changed = false;
+		console.log('zz updating pending context', context);
 		for (const [key, value] of Object.entries(context)) {
 			const current = (this._context as unknown as Record<string, unknown>)[key];
 			if (
