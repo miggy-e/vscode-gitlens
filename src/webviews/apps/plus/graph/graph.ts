@@ -16,12 +16,27 @@ import { DataPointClickEvent, TimelineChart } from './chart';
 
 export class GraphApp extends App<State> {
 	private _chart: TimelineChart | undefined;
+	private _graph: HTMLElement | null | undefined;
+	private _messages: HTMLElement | null | undefined;
+	private times = 0;
 
 	constructor() {
 		super('GraphApp');
 	}
 
 	protected override onInitialize() {
+		this._graph = document.getElementById('graph');
+		this._messages = document.getElementById('messages');
+		if (this._messages != null){
+			this._messages.append('GraphApp initialized');
+			const $newmessage = document.createElement('div');
+			$newmessage.textContent = 'New message';
+			this._messages.append($newmessage);
+
+			const $newmessage2 = document.createElement('div');
+			$newmessage2.textContent = 'New message2';
+			this._messages.append($newmessage2);
+		}
 		provideVSCodeDesignSystem().register({
 			register: function (container: any, context: any) {
 				vsCodeButton().register(container, context);
@@ -45,10 +60,13 @@ export class GraphApp extends App<State> {
 		);
 
 		return disposables;
+
 	}
 
 	protected override onMessageReceived(e: MessageEvent) {
 		const msg = e.data as IpcMessage;
+		const $message = document.getElementById('messages')!;
+		$message.append(`<div>${JSON.stringify(msg)}</div>`);
 
 		switch (msg.method) {
 			case DidChangeStateNotificationType.method:
@@ -92,6 +110,9 @@ export class GraphApp extends App<State> {
 	}
 
 	private updateState(): void {
+		if (this._graph != null){
+			this._graph.textContent = `updated state ${this.times++}`;
+		}
 		const $overlay = document.getElementById('overlay') as HTMLDivElement;
 		$overlay.classList.toggle('hidden', this.state.access.allowed);
 
