@@ -8,7 +8,6 @@ import { setContext } from '../../../context';
 import { PlusFeatures } from '../../../features';
 import { GitUri } from '../../../git/gitUri';
 import { RepositoryChange, RepositoryChangeComparisonMode, RepositoryChangeEvent } from '../../../git/models';
-import { createFromDateDelta } from '../../../system/date';
 import { debug } from '../../../system/decorators/log';
 import { debounce, Deferrable } from '../../../system/function';
 import { filter } from '../../../system/iterable';
@@ -86,7 +85,7 @@ export class GraphWebview extends WebviewBase<State> {
 		};
 	}
 
-	override async show(column: ViewColumn = ViewColumn.Beside): Promise<void> {
+	override async show(column: ViewColumn = ViewColumn.Active): Promise<void> {
 		if (!(await ensurePlusFeaturesEnabled())) return;
 		return super.show(column);
 	}
@@ -131,7 +130,7 @@ export class GraphWebview extends WebviewBase<State> {
 	}
 
 	protected override registerCommands(): Disposable[] {
-		return [commands.registerCommand(Commands.RefreshTimelinePage, () => this.refresh())];
+		return [commands.registerCommand(Commands.RefreshGraphPage, () => this.refresh())];
 	}
 
 	protected override onFocusChanged(focused: boolean): void {
@@ -332,21 +331,6 @@ export class GraphWebview extends WebviewBase<State> {
 			shortDateFormat: shortDateFormat,
 			access: access,
 		};
-	}
-
-	private getPeriodDate(period: Period): Date {
-		const [number, unit] = period.split('|');
-
-		switch (unit) {
-			case 'D':
-				return createFromDateDelta(new Date(), { days: -parseInt(number, 10) });
-			case 'M':
-				return createFromDateDelta(new Date(), { months: -parseInt(number, 10) });
-			case 'Y':
-				return createFromDateDelta(new Date(), { years: -parseInt(number, 10) });
-			default:
-				return createFromDateDelta(new Date(), { months: -3 });
-		}
 	}
 
 	private updatePendingContext(context: Partial<Context>): boolean {

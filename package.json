@@ -3806,6 +3806,12 @@
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "gitlens.refreshGraphPage",
+				"title": "Refresh",
+				"category": "GitLens",
+				"icon": "$(refresh)"
+			},
+			{
 				"command": "gitlens.showWelcomePage",
 				"title": "Welcome (Quick Setup)",
 				"category": "GitLens"
@@ -6096,6 +6102,10 @@
 					"when": "false"
 				},
 				{
+					"command": "gitlens.refreshGraphPage",
+					"when": "gitlens:enabled"
+				},
+				{
 					"command": "gitlens.showBranchesView",
 					"when": "gitlens:enabled"
 				},
@@ -7757,6 +7767,11 @@
 				{
 					"command": "gitlens.refreshTimelinePage",
 					"when": "gitlens:timelinePage:focused",
+					"group": "navigation@-99"
+				},
+				{
+					"command": "gitlens.refreshGraphPage",
+					"when": "gitlens:graphPage:focused",
 					"group": "navigation@-99"
 				}
 			],
