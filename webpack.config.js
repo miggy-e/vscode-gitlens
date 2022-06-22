@@ -173,7 +173,7 @@ function getExtensionConfig(target, mode, env) {
 								loader: 'esbuild-loader',
 								options: {
 									implementation: esbuild,
-									loader: 'ts',
+									loader: 'tsx',
 									target: ['es2020', 'chrome91', 'node14.16'],
 									tsconfigRaw: resolveTSConfig(
 										path.join(
@@ -262,6 +262,7 @@ function getWebviewsConfig(mode, env) {
 		getHtmlPlugin('settings', false, mode, env),
 		getHtmlPlugin('timeline', true, mode, env),
 		getHtmlPlugin('welcome', false, mode, env),
+		getHtmlPlugin('graph', false, mode, env),
 		getCspHtmlPlugin(mode, env),
 		new InlineChunkHtmlPlugin(HtmlPlugin, mode === 'production' ? ['\\.css$'] : []),
 		new CopyPlugin({
@@ -305,6 +306,7 @@ function getWebviewsConfig(mode, env) {
 			settings: './settings/settings.ts',
 			timeline: './plus/timeline/timeline.ts',
 			welcome: './welcome/welcome.ts',
+			graph: './graph/graph.tsx',
 		},
 		mode: mode,
 		target: 'web',
@@ -365,7 +367,7 @@ function getWebviewsConfig(mode, env) {
 								loader: 'esbuild-loader',
 								options: {
 									implementation: esbuild,
-									loader: 'ts',
+									loader: 'tsx',
 									target: 'es2020',
 									tsconfigRaw: resolveTSConfig(path.join(basePath, 'tsconfig.json')),
 								},

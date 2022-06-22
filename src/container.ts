@@ -58,6 +58,7 @@ import { ViewCommands } from './views/viewCommands';
 import { ViewFileDecorationProvider } from './views/viewDecorationProvider';
 import { WorktreesView } from './views/worktreesView';
 import { VslsController } from './vsls/vsls';
+import { GraphWebview } from './webviews/graph/graphWebview';
 import { HomeWebviewView } from './webviews/home/homeWebviewView';
 import { RebaseEditorProvider } from './webviews/rebase/rebaseEditor';
 import { SettingsWebview } from './webviews/settings/settingsWebview';
@@ -186,6 +187,7 @@ export class Container {
 		context.subscriptions.push((this._timelineWebview = new TimelineWebview(this)));
 		context.subscriptions.push((this._welcomeWebview = new WelcomeWebview(this)));
 		context.subscriptions.push((this._rebaseEditor = new RebaseEditorProvider(this)));
+		context.subscriptions.push((this._graphWebview = new GraphWebview(this)));
 
 		context.subscriptions.push(new ViewFileDecorationProvider());
 
@@ -497,6 +499,11 @@ export class Container {
 	private _settingsWebview: SettingsWebview;
 	get settingsWebview() {
 		return this._settingsWebview;
+	}
+
+	private _graphWebview: GraphWebview;
+	get graphWebview() {
+		return this._graphWebview;
 	}
 
 	private _stashesView: StashesView | undefined;
