@@ -3,8 +3,7 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { CommitListCallback, State } from '../../graph/protocol';
 import { App } from '../shared/appBase';
-import { GKGraph } from './GKGraph';
-// import { GraphWrapper } from './GraphWrapper';
+import { GraphWrapper } from './GraphWrapper';
 import './graph.scss';
 
 export class GraphApp extends App<State> {
