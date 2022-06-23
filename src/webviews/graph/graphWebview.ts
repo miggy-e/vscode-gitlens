@@ -1,3 +1,4 @@
+import { ViewColumn } from 'vscode';
 import { Commands } from '../../constants';
 import type { Container } from '../../container';
 import { WebviewBase } from '../webviewBase';
@@ -63,6 +64,10 @@ export class GraphWebview extends WebviewBase<State> {
 
 	protected override async includeBootstrap(): Promise<State> {
 		return this.getState();
+	}
+
+	override async show(column: ViewColumn = ViewColumn.Active): Promise<void> {
+		return super.show(column);
 	}
 }
 
