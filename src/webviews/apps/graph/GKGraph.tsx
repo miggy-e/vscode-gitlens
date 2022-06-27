@@ -5,31 +5,40 @@ import * as React from 'react';
 // TODO: remove mockGraphRows constant once we get fixed GITLENS-203
 const mockGraphRows: GraphRow[] = [
   {
-    sha: '1411222233334447',
-    parents: ['1311222233334445'],
-    author: 'Miggy Eusebio',
-    email: 'miggy.eusebio@gitkraken.com',
-    date: 1655065060000,
-    message: 'Third commit',
-    type: 'commit-node'
+    'sha': '1511222233334447',
+    'parents': ['1411222233334447', '1211222233334444'],
+    'author': 'Miggy Eusebio',
+    'email': 'miggy.eusebio@gitkraken.com',
+    'date': 1655151460000,
+    'message': 'Child commit',
+    'type': 'commit-node'
   },
   {
-    sha: '1311222233334445',
-    parents: ['1211222233334444'],
-    author: 'Eric Follana',
-    email: 'eric.follana@gitkraken.com',
-    date: 1654978660000,
-    message: 'Second commit',
-    type: 'commit-node'
+    'sha': '1411222233334447',
+    'parents': ['1311222233334445'],
+    'author': 'Miggy Eusebio',
+    'email': 'miggy.eusebio@gitkraken.com',
+    'date': 1655065060000,
+    'message': 'Third commit',
+    'type': 'commit-node'
   },
   {
-    sha: '1211222233334444',
-    parents: [],
-    author: 'Ramin Tadayon',
-    email: 'ramin.tadayon@gitkraken.com',
-    date: 1654892260000,
-    message: 'Initial commit',
-    type: 'commit-node'
+    'sha': '1311222233334445',
+    'parents': ['1211222233334444'],
+    'author': 'Eric Follana',
+    'email': 'eric.follana@gitkraken.com',
+    'date': 1654978660000,
+    'message': 'Second commit',
+    'type': 'commit-node'
+  },
+  {
+    'sha': '1211222233334444',
+    'parents': [],
+    'author': 'Ramin Tadayon',
+    'email': 'ramin.tadayon@gitkraken.com',
+    'date': 1654892260000,
+    'message': 'Initial commit',
+    'type': 'commit-node'
   }
 ];
 
