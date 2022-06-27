@@ -1,5 +1,7 @@
+import { GraphRow } from '@axosoft/gitkraken-components/lib/components/graph/GraphContainer';
 import React, { useEffect, useState } from 'react';
 import { CommitListCallback, GitCommit, State } from '../../graph/protocol';
+import { GKGraph } from './GKGraph';
 
 export interface GraphWrapperProps extends State {
     subscriber: (callback: CommitListCallback) => () => void;
@@ -29,12 +31,14 @@ export function GraphWrapper({ subscriber, commits, repositories, selectedReposi
 
     return (
         <>
-            <ul>
+            {/* <ul>
                 {reposList.length ? reposList.map((item, index) => (<li key={`repos-${index}`}>{JSON.stringify(item)}</li>)) : (<li>No repos</li>)}
             </ul>
             <ul>
                 {graphList.length ? graphList.map((item, index) => (<li key={`commits-${index}`}>{JSON.stringify(item)}</li>)) : (<li>No commits</li>)}
-            </ul>
+            </ul> */}
+            <GKGraph graphRows={Object.values(graphList) as GraphRow[]} repo={currentRepository}/>
         </>
+
     );
 }

@@ -4,6 +4,7 @@ import type { Container } from '../../container';
 import { WebviewBase } from '../webviewBase';
 import type { GitCommit, Repository, State } from './protocol';
 
+
 export class GraphWebview extends WebviewBase<State> {
 	private selectedRepository?: string;
 
@@ -32,12 +33,33 @@ export class GraphWebview extends WebviewBase<State> {
 			return [];
 		}
 
-		const log = await this.container.git.getLog(repository.uri);
-		if (log?.commits === undefined) {
+		const [currentUser, log] = await Promise.all([
+			this.container.git.getCurrentUser(repo as string),
+			this.container.git.getLog(repo as string)
+		]);
+
+		if (log == null) {
 			return [];
 		}
 
-		return Array.from(log.commits.values());
+		const name = currentUser?.name ? `${currentUser.name} (you)` : 'You';
+
+		const commitList: any[] = [];
+		for (const commit of log.commits.values()) {
+			commitList.push({
+				sha: commit.sha,
+				parents: commit.parents,
+				author: commit.author.name === 'You' ? name : commit.author.name,
+				date: commit.date.getTime(),
+				message: commit.message ?? commit.summary,
+				email: commit.author.email,
+				type: 'commit-node'
+			});
+		}
+
+		commitList.sort((a, b) => b.date - a.date);
+
+		return commitList;
 	}
 
 	private async getState(): Promise<State> {
@@ -72,11 +94,12 @@ export class GraphWebview extends WebviewBase<State> {
 }
 
 function formatCommits(commits: GitCommit[]): GitCommit[] {
-	return commits.map(({ sha, author, message }) => ({
-		sha: sha,
-		author: author,
-		message: message
-	}));
+	return commits;
+	// return commits.map(({ sha, author, message }) => ({
+	// 	sha: sha,
+	// 	author: author,
+	// 	message: message
+	// }));
 }
 
 function formatRepositories(repositories: Repository[]): Repository[] {

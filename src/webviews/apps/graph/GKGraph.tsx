@@ -44,6 +44,8 @@ const mockGraphRows: GraphRow[] = [
 
 interface GKProps {
   extensionUri?: any;
+  graphRows?: GraphRow[];
+  repo?: string
 }
 
 interface GKState {
@@ -95,16 +97,17 @@ export class GKGraph extends React.Component<GKProps, GKState> {
   }
 
   override render() {
-    // const {
-    //   rows
-    // } = this.state;
-    const rows = mockGraphRows; // TODO: remove this line once we get fixed GITLENS-203
-
+    const {
+      graphRows,
+      repo
+    } = this.props;
+    // const rows = mockGraphRows; // TODO: remove this line once we get fixed GITLENS-203
+    console.log(' graph rows', graphRows);
     return (
       <div className="GKGraph">
-        <h1>Test "GraphContainer" component</h1>
+        <h2 >{repo}</h2>
         <GraphContainer
-          graphRows={rows}
+          graphRows={(graphRows != null)? graphRows : mockGraphRows}
           useAuthorInitialsForAvatars={false}
         />
       </div>
