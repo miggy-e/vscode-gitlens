@@ -101,8 +101,6 @@ export class GKGraph extends React.Component<GKProps, GKState> {
       graphRows,
       repo
     } = this.props;
-    // const rows = mockGraphRows; // TODO: remove this line once we get fixed GITLENS-203
-    console.log(' graph rows', graphRows);
     return (
       <div className="GKGraph">
         <h2 >{repo}</h2>
