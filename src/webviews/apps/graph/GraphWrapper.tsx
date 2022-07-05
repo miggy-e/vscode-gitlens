@@ -5,13 +5,14 @@ import { GKGraph } from './GKGraph';
 
 export interface GraphWrapperProps extends State {
     subscriber: (callback: CommitListCallback) => () => void;
+    nonce?: string;
 }
 
 // TODO: this needs to be replaced with a function from the Graph repo
 const getGraphModel = (data: GitCommit[]) => data;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function GraphWrapper({ subscriber, commits, repositories, selectedRepository }: GraphWrapperProps) {
+export function GraphWrapper({ subscriber, commits, repositories, selectedRepository, nonce }: GraphWrapperProps) {
     const [graphList, setGraphList] = useState(getGraphModel(commits));
     const [reposList, setReposList] = useState(repositories);
     const [currentRepository, setCurrentRepository] = useState(selectedRepository);
@@ -37,7 +38,11 @@ export function GraphWrapper({ subscriber, commits, repositories, selectedReposi
             <ul>
                 {graphList.length ? graphList.map((item, index) => (<li key={`commits-${index}`}>{JSON.stringify(item)}</li>)) : (<li>No commits</li>)}
             </ul> */}
-            <GKGraph graphRows={Object.values(graphList) as GraphRow[]} repo={currentRepository}/>
+            <GKGraph
+                graphRows={Object.values(graphList) as GraphRow[]}
+                repo={currentRepository}
+                nonce={nonce}
+            />
         </>
 
     );

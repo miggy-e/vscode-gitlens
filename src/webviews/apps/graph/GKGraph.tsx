@@ -45,7 +45,8 @@ const mockGraphRows: GraphRow[] = [
 interface GKProps {
   extensionUri?: any;
   graphRows?: GraphRow[];
-  repo?: string
+  repo?: string;
+  nonce?: string;
 }
 
 interface GKState {
@@ -99,7 +100,8 @@ export class GKGraph extends React.Component<GKProps, GKState> {
   override render() {
     const {
       graphRows,
-      repo
+      repo,
+      nonce
     } = this.props;
     return (
       <div className="GKGraph">
@@ -107,6 +109,7 @@ export class GKGraph extends React.Component<GKProps, GKState> {
         <GraphContainer
           graphRows={(graphRows != null)? graphRows : mockGraphRows}
           useAuthorInitialsForAvatars={false}
+          nonce={nonce}
         />
       </div>
     );

@@ -5,6 +5,7 @@ import { WebviewBase } from '../webviewBase';
 import type { GitCommit, Repository, State } from './protocol';
 
 
+
 export class GraphWebview extends WebviewBase<State> {
 	private selectedRepository?: string;
 
@@ -80,7 +81,8 @@ export class GraphWebview extends WebviewBase<State> {
 		return {
 			repositories: formatRepositories(repositories),
 			selectedRepository: this.selectedRepository,
-			commits: formatCommits(commits)
+			commits: formatCommits(commits),
+			nonce: super.getCSPNonce()
 		};
 	}
 
