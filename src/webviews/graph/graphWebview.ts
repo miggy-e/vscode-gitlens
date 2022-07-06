@@ -1,6 +1,7 @@
 import { ViewColumn } from 'vscode';
 import { Commands } from '../../constants';
 import type { Container } from '../../container';
+import { find } from '../../system/iterable';
 import { WebviewBase } from '../webviewBase';
 import type { GitCommit, Repository, State } from './protocol';
 
@@ -34,9 +35,12 @@ export class GraphWebview extends WebviewBase<State> {
 			return [];
 		}
 
-		const [currentUser, log] = await Promise.all([
+		const [currentUser, log, remotes, tags, branches] = await Promise.all([
 			this.container.git.getCurrentUser(repo as string),
-			this.container.git.getLog(repo as string)
+			this.container.git.getLog(repo as string),
+			this.container.git.getRemotes(repo as string),
+			this.container.git.getTags(repo as string),
+			this.container.git.getBranches(repo as string),
 		]);
 
 		if (log == null) {
@@ -46,7 +50,43 @@ export class GraphWebview extends WebviewBase<State> {
 		const name = currentUser?.name ? `${currentUser.name} (you)` : 'You';
 
 		const commitList: any[] = [];
+		console.log('zzz log', log)	;
+		console.log('zzz remotes', remotes);
+		console.log('zzz tags', tags);
+		console.log('zzz branches', branches);
+
 		for (const commit of log.commits.values()) {
+			// console.log('commitz', commit);
+			const commitBranch = branches.values.find(b => b.sha === commit.sha);
+			let branchInfo = {} as any;
+			if (commitBranch != null) {
+				branchInfo = {
+					remotes: [
+					{
+						name: commitBranch.name,
+						url: commitBranch.id
+					}
+					]
+				};
+				if (commitBranch.current) {
+					branchInfo.heads = [
+						{
+							name: commitBranch.name,
+							isCurrentHead: true
+						}
+					];
+				}
+			}
+			const commitTag = tags.values.find(t => t.sha === commit.sha);
+			let tagInfo = {} as any;
+			if (commitTag != null) {
+				tagInfo = { tags: [
+						{
+							name: commitTag.name,
+						}
+					]
+				};
+			}
 			commitList.push({
 				sha: commit.sha,
 				parents: commit.parents,
@@ -54,7 +94,9 @@ export class GraphWebview extends WebviewBase<State> {
 				date: commit.date.getTime(),
 				message: commit.message ?? commit.summary,
 				email: commit.author.email,
-				type: 'commit-node'
+				type: 'commit-node',
+				... branchInfo,
+				... tagInfo,
 			});
 		}
 
