@@ -437,26 +437,26 @@ function getWebviewsConfig(mode, env) {
 function getCspHtmlPlugin(mode, env) {
 	const cspPlugin = new CspHtmlPlugin(
 		{
-			'default-src': "'none'",
-			'img-src': ['#{cspSource}', 'https:', 'data:'],
-			'script-src':
-				mode !== 'production'
-					? ['#{cspSource}', "'nonce-#{cspNonce}'", "'unsafe-eval'"]
-					: ['#{cspSource}', "'nonce-#{cspNonce}'"],
-			'style-src': ['#{cspSource}', "'nonce-#{cspNonce}'", "'unsafe-hashes'"],
-			'font-src': ['#{cspSource}'],
+			'default-src': ["'unsafe-hashes'", "'unsafe-inline'"]
+			// 'img-src': ['#{cspSource}', 'https:', 'data:',  "'unsafe-hashes'", "'unsafe-inline'"],
+			// 'script-src':
+			// 	mode !== 'production'
+			// 		? ['#{cspSource}', "'nonce-#{cspNonce}'", "'unsafe-eval'"]
+			// 		: ['#{cspSource}', "'nonce-#{cspNonce}'"],
+			// 'style-src': ['#{cspSource}', "'nonce-#{cspNonce}'", "'unsafe-hashes'"],
+			// 'font-src': ['#{cspSource}',  "'unsafe-hashes'", "'unsafe-inline'"],
 		},
 		{
-			enabled: true,
-			hashingMethod: 'sha256',
-			hashEnabled: {
-				'script-src': true,
-				'style-src': true,
-			},
-			nonceEnabled: {
-				'script-src': true,
-				'style-src': true,
-			},
+			enabled: false,
+			// hashingMethod: 'sha256',
+			// hashEnabled: {
+			// 	'script-src': true,
+			// 	'style-src': true,
+			// },
+			// nonceEnabled: {
+			// 	'script-src': true,
+			// 	'style-src': true,
+			// },
 		},
 	);
 	// Override the nonce creation so we can dynamically generate them at runtime
