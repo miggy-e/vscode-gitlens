@@ -1,5 +1,6 @@
 import GraphContainer, { GraphRow } from '@axosoft/gitkraken-components/lib/components/graph/GraphContainer';
 import * as React from 'react';
+import { calculateCSSVariables } from './graphUtils';
 // import { TextDocument, Uri, workspace } from 'vscode';
 
 // TODO: remove mockGraphRows constant once we get fixed GITLENS-203
@@ -110,6 +111,7 @@ export class GKGraph extends React.Component<GKProps, GKState> {
           graphRows={(graphRows != null)? graphRows : mockGraphRows}
           useAuthorInitialsForAvatars={false}
           nonce={nonce}
+          cssVariables={calculateCSSVariables()}
         />
       </div>
     );
